@@ -1,0 +1,1 @@
+/home/luiz/Studies_Rust/code_wars/target/debug/code_wars: /home/luiz/Studies_Rust/code_wars/src/disemvowel_trolls.rs /home/luiz/Studies_Rust/code_wars/src/main.rs /home/luiz/Studies_Rust/code_wars/src/take_ten_minutes.rs /home/luiz/Studies_Rust/code_wars/src/which_are_in.rs
