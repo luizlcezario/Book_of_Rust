@@ -32,8 +32,11 @@ impl ElementLine {
 	pub fn add_value(&mut self, value: String) {
 		self.value.push_str(&value);
 	}
-	pub fn get_value(&self) -> String {
-		self.value.clone()
+	pub fn get_value(&self) -> &String {
+		&self.value
+	}
+	pub fn get_type(&self) -> &ParseTypes {
+		&self.parse_type
 	}
 }
 
