@@ -3,8 +3,11 @@ use std::env;
 use std::fs::File;
 use std::io::Read;
 use std::io::Write;
+
+use self::commands::ParsedHead;
 mod parser;
 mod commands;
+mod execute;
 
 fn display_prompt() {
 	let mut contents = String::new();
@@ -18,13 +21,15 @@ fn display_prompt() {
 
 pub fn minishell() {
 	let mut a = String::new();
+	let mut tokens: ParsedHead; 
     loop {
 		display_prompt();
         match io::stdin().read_line(& mut a) {
             Ok(_) => (),
             Err(e) =>  panic!("Error: {}", e),
         };
-		parser::parser(&a);
+		tokens = parser::parser(&a);
+		execute::execute(tokens);
         a.clear();
     }
 }

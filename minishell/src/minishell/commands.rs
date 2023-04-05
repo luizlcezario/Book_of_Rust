@@ -1,3 +1,5 @@
+use std::collections::LinkedList;
+
 #[derive(PartialEq)]
 pub enum ParseTypes {
 	Word,
@@ -12,97 +14,52 @@ pub struct ElementLine {
 }
 
 impl ElementLine {
-	fn new() -> ElementLine {
+	pub fn new() -> ElementLine {
 		ElementLine  {
 			parse_type: ParseTypes::End,
 			value: String::new(),
 		}
 	}
-}
-
-pub struct ParsedNode {
-	element: ElementLine,
-	right: Option<Box<ParsedNode>>,
-	left:  Option<Box<ParsedNode>>,
-}
-
-impl ParsedNode {
-	fn new(element: ElementLine) -> ParsedNode {
-		ParsedNode {
-			element, 
-			right: None,
-			left: None,
+	pub fn select_type(&mut self, value: & String){
+		if value == "|" {
+			self.parse_type = ParseTypes::Pipe;
+		} else if value == ">" || value == "<" || value == ">>" || value == "<<" {
+			self.parse_type = ParseTypes::Redirection;
+		} else {
+			self.parse_type = ParseTypes::Word;
 		}
 	}
-	pub fn setLeft(mut self, node: ParsedNode) -> Self {
-        self.left = Some(Box::new(node));
-        self
-    }
-
-    pub fn setRight(mut self, node: ParsedNode) -> Self {
-        self.right = Some(Box::new(node));
-        self
-    }
-
+	pub fn add_value(&mut self, value: String) {
+		self.value.push_str(&value);
+	}
+	pub fn get_value(&self) -> String {
+		self.value.clone()
+	}
 }
 
-struct ParsedTree {
-	root: Option<Box<ParsedNode>>,
-	last_added: &Option<&Box<&ParsedNode>>,
+pub struct ParsedHead {
+	n_cmds: i32,
+	n_redirections: i32,
+	pub cmds: LinkedList<ElementLine>,
+	pub redirections: LinkedList<ElementLine>,
 }
 
-impl ParsedTree {
-	fn new() -> ParsedTree {
-		ParsedTree {
-			root: None,
-			last_added: &None,
-		}
+impl ParsedHead {
+	pub fn add_cmd(&mut self, cmd: ElementLine) {
+		self.cmds.push_back(cmd);
+		self.n_cmds += 1;
 	}
-	fn add_element(&mut self, element: ElementLine) {
-		match self.root {
-			None => {
-				self.root = Some(ParsedNode::new(element));
-				return;
-			},
-			Some(mut r) => self.insert(& mut r, ParsedNode::new(element)),
-		}
+	pub fn add_redirection(&mut self, redirection: ElementLine) {
+		self.redirections.push_back(redirection);
+		self.n_redirections += 1;
 	}
-	fn insert(&mut self, &mut now: &mut Option<Box<ParsedNode>>, newElement: ParsedNode) {
-		if(now.is_none()) {
-			now = Some(Box::new(newElement));
-			return;
-		}
 
-		21                                                                                               
-		match newElement.element.parse_type {
-			ParseTypes::Redirection => {
-				self.insert(&mut now.left, newElement);
-				self.last_added = &now.left;
-			},
-			ParseTypes::Pipe => { 
-				if (now.)
-				self.insert(&mut now.right, newElement);
-				self.last_added = &now.right;
-			},
-			ParsedTree::Word => {
-				if (self.last_added.is_none()) {
-					self.insert(&mut now.right, newElement);
-					self.last_added = &now.right;
-				} else {
-					self.insert(&mut now.left, newElement);
-					self.last_added = &now.left;
-				}
-				self.last_added = &now.left;
-			},
-			};
-		}
-	}
-	// fn showInOrder( now: Option<&ParsedNode>, i: i32) {
-		if (!now.is_none()) {
-			ParsedTree::showInOrder(now.getLeft());
-			i += 1;
-			println!("[{}]: {}", i, now.);
-			ParsedTree::showInOrder(now.getRight());
+	pub fn new() -> ParsedHead {
+		ParsedHead {
+			n_cmds: 0,
+			n_redirections: 0,
+			cmds: LinkedList::new(),
+			redirections: LinkedList::new(),
 		}
 	}
 }

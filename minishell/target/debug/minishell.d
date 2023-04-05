@@ -1,1 +1,1 @@
-/home/luiz/Studies_Rust/minishell/target/debug/minishell: /home/luiz/Studies_Rust/minishell/src/main.rs /home/luiz/Studies_Rust/minishell/src/minishell.rs
+/home/luiz/Studies_Rust/minishell/target/debug/minishell: /home/luiz/Studies_Rust/minishell/src/main.rs /home/luiz/Studies_Rust/minishell/src/minishell/commands.rs /home/luiz/Studies_Rust/minishell/src/minishell/execute.rs /home/luiz/Studies_Rust/minishell/src/minishell/mod.rs /home/luiz/Studies_Rust/minishell/src/minishell/parser.rs
