@@ -1,13 +1,14 @@
-use std::collections::LinkedList;
+use std::{collections::LinkedList, process::{Command, Stdio, Child}};
 
 #[derive(PartialEq)]
+#[derive(Clone)]
 pub enum ParseTypes {
 	Word,
 	Pipe,
 	Redirection,
 	End,
 }
-
+#[derive(Clone)]
 pub struct ElementLine {
 	parse_type: ParseTypes,
 	value: String,
@@ -37,6 +38,17 @@ impl ElementLine {
 	}
 	pub fn get_type(&self) -> &ParseTypes {
 		&self.parse_type
+	}
+	pub fn execute(&self, pipe_in: Stdio, pipe_out: Stdio) -> Child {
+		let splitted = self.value.split(" ").collect::<Vec<&str>>();
+		let sed_child;
+		if splitted[1..].concat() != "" {
+			sed_child = Command::new(splitted[0]).arg(splitted[1..].concat()).stdin(pipe_in).stdout(pipe_out).spawn().expect("error on spawn");
+		}
+		else {
+			sed_child = Command::new(splitted[0]).stdin(pipe_in).stdout(pipe_out).spawn().expect("error on spawn");
+		}
+		return sed_child;
 	}
 }
 

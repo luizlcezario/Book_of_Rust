@@ -1,7 +1,7 @@
 mod disemvowel_trolls;
 mod take_ten_minutes;
 mod which_are_in;
-
+mod test;
 fn main() {
     assert_eq!(disemvowel_trolls::disemvowel("This website is for losers LOL!"), "Ths wbst s fr lsrs LL!");
     assert!(  take_ten_minutes::is_valid_walk(&['n','s','n','s','n','s','n','s','n','s']));
@@ -29,6 +29,7 @@ fn main() {
         &["live", "strong", "arp", "arp"],
         &["lively", "alive", "harp", "sharp", "armstrong"],
     ), ["arp", "live", "strong"]);
-   
+
+        test::test();
   
 }

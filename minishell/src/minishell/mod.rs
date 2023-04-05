@@ -8,6 +8,7 @@ use self::commands::ParsedHead;
 mod parser;
 mod commands;
 mod execute;
+mod heredoc;
 
 fn display_prompt() {
 	let mut contents = String::new();
@@ -29,6 +30,12 @@ pub fn minishell() {
             Err(e) =>  panic!("Error: {}", e),
         };
 		tokens = parser::parser(&a);
+		// for cmd in tokens.cmds.iter() {
+		// 	println!("cmd: {}", cmd.get_value());
+		// }
+		// for red in tokens.redirections.iter() {
+		// 	println!("red: {}", red.get_value());
+		// }
 		execute::execute(tokens);
         a.clear();
     }
