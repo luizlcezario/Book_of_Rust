@@ -23,15 +23,15 @@ Beware: In some languages r must be without duplicates.
  */
 
 pub fn in_array(arr_a: &[&str], arr_b: &[&str]) -> Vec<String> {
-	let mut result: Vec<String> = Vec::new();
-	arr_a.into_iter().for_each(|&x| {
-		arr_b.into_iter().for_each(|&y| {
-			if y.contains(x) {
-				result.push(x.to_string());
-			}
-		});
-	});
-	result.sort();
-	result.dedup();
-	return result
+    let mut result: Vec<String> = Vec::new();
+    arr_a.into_iter().for_each(|&x| {
+        arr_b.into_iter().for_each(|&y| {
+            if y.contains(x) {
+                result.push(x.to_string());
+            }
+        });
+    });
+    result.sort();
+    result.dedup();
+    return result;
 }
